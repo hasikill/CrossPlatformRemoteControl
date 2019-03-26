@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1349</width>
+    <height>725</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>1170</x>
+      <y>20</y>
+      <width>181</width>
+      <height>641</height>
+     </rect>
+    </property>
+    <property name="contextMenuPolicy">
+     <enum>Qt::CustomContextMenu</enum>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1349</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>操作</string>
+    </property>
+    <addaction name="actions_screen"/>
+    <addaction name="action_file"/>
+    <addaction name="action_cmd"/>
+    <addaction name="action_exec"/>
+    <addaction name="action_process"/>
+    <addaction name="action_shot"/>
+    <addaction name="actions_control"/>
+    <addaction name="action_defin_high"/>
+    <addaction name="action_comm"/>
+    <addaction name="action_blur"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actions_screen"/>
+   <addaction name="action_shot"/>
+   <addaction name="action_file"/>
+   <addaction name="action_cmd"/>
+   <addaction name="action_process"/>
+   <addaction name="action_exec"/>
+   <addaction name="actions_control"/>
+   <addaction name="separator"/>
+   <addaction name="action_blur"/>
+   <addaction name="action_comm"/>
+   <addaction name="action_defin_high"/>
+   <addaction name="separator"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actions_screen">
+   <property name="text">
+    <string>远程屏幕</string>
+   </property>
+  </action>
+  <action name="action_file">
+   <property name="text">
+    <string>远程文件</string>
+   </property>
+  </action>
+  <action name="action_cmd">
+   <property name="text">
+    <string>远程CMD</string>
+   </property>
+  </action>
+  <action name="action_exec">
+   <property name="text">
+    <string>远程执行</string>
+   </property>
+  </action>
+  <action name="action_process">
+   <property name="text">
+    <string>远程进程</string>
+   </property>
+  </action>
+  <action name="action_shot">
+   <property name="text">
+    <string>远程截图</string>
+   </property>
+  </action>
+  <action name="action_defin_high">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>高清画质</string>
+   </property>
+  </action>
+  <action name="action_comm">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>普通画质</string>
+   </property>
+  </action>
+  <action name="action_blur">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>模糊画质</string>
+   </property>
+  </action>
+  <action name="actions_control">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>控制屏幕</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
+
