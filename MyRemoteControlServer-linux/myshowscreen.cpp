@@ -11,7 +11,7 @@ MyShowScreen::MyShowScreen(QWidget *parent) : QObject (parent)
     m_nDefinition = 2;
 }
 
-void MyShowScreen::SetScreenAttribute(MyPacketSender *s, int nW, int nH, const uchar *img, int nBytes)
+void MyShowScreen::SetScreenAttribute(MyPacketSender *s, int nH, int nW, const uchar *img, int nBytes)
 {
     //所有客户端公用
     m_sender = s;
@@ -27,8 +27,18 @@ void MyShowScreen::SetScreenAttribute(MyPacketSender *s, int nW, int nH, const u
 
 void MyShowScreen::flush()
 {
+    if (m_nRemoteWidth != m_lb->width() || m_nRemoteHeight != m_lb->height())
+    {
+        m_lb->resize(m_nRemoteWidth, m_nRemoteHeight);
+    }
+
     m_lb->setPixmap(m_curImg);
-    reinterpret_cast<MainWindow *>(m_parent)->m_scorllArea->setWidget(m_lb);
+
+    if (reinterpret_cast<MainWindow *>(m_parent)->m_scorllArea->widget() != m_lb)
+    {
+        reinterpret_cast<MainWindow *>(m_parent)->m_scorllArea->setWidget(m_lb);
+    }
+
     if (m_sender->isOnScreen())
     {
         m_sender->sendToScreen(m_nDefinition);

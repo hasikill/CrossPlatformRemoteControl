@@ -34,8 +34,6 @@ void MyScreenView::mousePressEvent(QMouseEvent *ev)
     //构建鼠标消息
     MYMOUSEINPUT mouseInput;
     memset(&mouseInput, 0, sizeof(MYMOUSEINPUT));
-    mouseInput.dx = ev->pos().x() * 65535 / width();
-    mouseInput.dy = ev->pos().y() * 65535 / height();
     mouseInput.mouseData = 0;
     if (ev->button() == Qt::LeftButton)
     {
@@ -68,8 +66,6 @@ void MyScreenView::mouseReleaseEvent(QMouseEvent *ev)
     //构建鼠标消息
     MYMOUSEINPUT mouseInput;
     memset(&mouseInput, 0, sizeof(MYMOUSEINPUT));
-    mouseInput.dx = ev->pos().x();
-    mouseInput.dy = ev->pos().y();
     mouseInput.mouseData = 0;
     if (ev->button() == Qt::LeftButton)
     {
@@ -92,7 +88,33 @@ void MyScreenView::mouseReleaseEvent(QMouseEvent *ev)
 
 void MyScreenView::mouseDoubleClickEvent(QMouseEvent *ev)
 {
+    if (m_pMain->ui->actions_control->isChecked() == false || m_bScreen == false) return;
+    MYINPUT input;
+    memset(&input, 0, sizeof(MYINPUT));
+    input.type = INPUT_MOUSE;
+    //构建鼠标消息
+    MYMOUSEINPUT mouseInput;
+    memset(&mouseInput, 0, sizeof(MYMOUSEINPUT));
+    mouseInput.mouseData = 0;
+    if (ev->button() == Qt::LeftButton)
+    {
+        mouseInput.dwFlags = MOUSEEVENTF_LEFTDOWN;
+    }
+    else if (ev->button() == Qt::RightButton)
+    {
+        mouseInput.dwFlags = MOUSEEVENTF_RIGHTDOWN;
+    }
+    mouseInput.time = 0;
+    mouseInput.dwExtraInfo = 0;
 
+#ifdef __C89_NAMELESS
+    input.mi = mouseInput;
+#else
+    input.DUMMYUNIONNAME.mi = mouseInput;
+#endif
+    //发送消息
+    m_sender->SendToControl(&input);
+    m_sender->SendToControl(&input);
 }
 
 void MyScreenView::mouseMoveEvent(QMouseEvent *ev)
@@ -151,10 +173,10 @@ void MyScreenView::keyPressEvent(QKeyEvent *ev)
     input.type = INPUT_KEYBOARD;
     //构建按键消息
     MYKEYBDINPUT keyInput;
-    keyInput.wVk = static_cast<unsigned short>(ev->key());
-    //keyInput.wScan = static_cast<unsigned short>(MapVirtualKeyA(keyInput.wVk, 0));
+    keyInput.wVk = static_cast<unsigned short>(ev->nativeVirtualKey());
+    keyInput.wScan = static_cast<unsigned short>(ev->nativeScanCode());
     keyInput.time = 0;
-    keyInput.dwFlags = 0;
+    keyInput.dwFlags = KEYEVENTF_SCANCODE;
     keyInput.dwExtraInfo = 0;
 
 #ifdef __C89_NAMELESS
@@ -162,7 +184,6 @@ void MyScreenView::keyPressEvent(QKeyEvent *ev)
 #else
     input.DUMMYUNIONNAME.ki = keyInput;
 #endif
-
 
     //发送消息
     m_sender->SendToControl(&input);
@@ -170,24 +191,24 @@ void MyScreenView::keyPressEvent(QKeyEvent *ev)
 
 void MyScreenView::keyReleaseEvent(QKeyEvent *ev)
 {
-    if (m_pMain->ui->actions_control->isChecked() == false || m_bScreen == false) return;
-    MYINPUT input;
-    memset(&input, 0, sizeof(MYINPUT));
-    input.type = INPUT_KEYBOARD;
-    //构建按键消息
-    MYKEYBDINPUT keyInput;
-    keyInput.wVk = static_cast<unsigned short>(ev->key());
-    //keyInput.wScan = static_cast<unsigned short>(MapVirtualKeyA(keyInput.wVk, 0));
-    keyInput.time = 0;
-    keyInput.dwFlags = KEYEVENTF_KEYUP;
-    keyInput.dwExtraInfo = 0;
+//    if (m_pMain->ui->actions_control->isChecked() == false || m_bScreen == false) return;
+//    MYINPUT input;
+//    memset(&input, 0, sizeof(MYINPUT));
+//    input.type = INPUT_KEYBOARD;
+//    //构建按键消息
+//    MYKEYBDINPUT keyInput;
+//    keyInput.wVk = static_cast<unsigned short>(ev->nativeVirtualKey());
+//    keyInput.wScan = static_cast<unsigned short>(ev->nativeScanCode());
+//    keyInput.time = 0;
+//    keyInput.dwFlags = KEYEVENTF_KEYUP;
+//    keyInput.dwExtraInfo = 0;
 
-#ifdef __C89_NAMELESS
-    input.ki = keyInput;
-#else
-    input.DUMMYUNIONNAME.ki = keyInput;
-#endif
+//#ifdef __C89_NAMELESS
+//    input.ki = keyInput;
+//#else
+//    input.DUMMYUNIONNAME.ki = keyInput;
+//#endif
 
-    //发送消息
-    m_sender->SendToControl(&input);
+//    //发送消息
+//    m_sender->SendToControl(&input);
 }

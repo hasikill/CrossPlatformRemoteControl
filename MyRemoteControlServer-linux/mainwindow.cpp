@@ -401,6 +401,7 @@ void MainWindow::disableActStart(bool flag)
     m_actStart->setDisabled(flag);
     if (flag == false)
     {
+        ui->actions_control->setChecked(false);
         if (m_pPrevItem != nullptr)
         {
             m_pPrevItem->setIcon(QIcon(":/res/user.png"));
