@@ -26,7 +26,7 @@ private:
 
     void startServer();
 
-    void packetProc(PACKET *pkt, MyPacketSender *sender, MyClientSession *client);
+    bool packetProc(PACKET *pkt, MyPacketSender *sender, MyClientSession *client);
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);

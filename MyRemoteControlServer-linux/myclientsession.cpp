@@ -133,6 +133,11 @@ void MyClientSession::do_read()
                 }
                 //packet process
                 m_fnPacketProc(pkt, m_sender, this);
+                //free
+                if (pkt != nullptr)
+                {
+                    delete[] pkt;
+                }
             }
             m_mtxRecv.unlock();
 

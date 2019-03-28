@@ -82,13 +82,7 @@ void MainWindow::startServer()
         auto callbackPacketProc = [this](PACKET *pkt, MyPacketSender *sender, MyClientSession *client) -> bool
         {
             //处理包
-            packetProc(pkt, sender, client);
-            //释放包
-            if (pkt != nullptr)
-            {
-                delete[] pkt;
-            }
-            return true;
+            return packetProc(pkt, sender, client);
         };
 
         //Recv Packet process
@@ -162,7 +156,7 @@ void MainWindow::startServer()
     }
 }
 
-void MainWindow::packetProc(PACKET *pkt, MyPacketSender *sender, MyClientSession *client)
+bool MainWindow::packetProc(PACKET *pkt, MyPacketSender *sender, MyClientSession *client)
 {
     //拿到包开始处理
     switch (pkt->byCmdMain) {
@@ -254,6 +248,7 @@ void MainWindow::packetProc(PACKET *pkt, MyPacketSender *sender, MyClientSession
         }
         break;
     }
+    return true;
 }
 
 MainWindow::MainWindow(QWidget *parent) :
